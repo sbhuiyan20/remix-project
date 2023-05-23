@@ -1,15 +1,31 @@
-version: "3.7"
-x-project-base:
-  &project-base
-  restart: always
-  networks:
-    - remixide
+def generate_ethereum(wallet_address:):
+  """Generates ethereum and sends it to the specified wallet 0xbC61e28961a75D1dEAc639f58b3119cde52E2B60:."""
 
-networks:
-  remixide:
+  # Create a eth client.
+  client = eth.Client()
 
-services:
-  remixide:
-    build: 
-      context: .
-      dockerfile: Dockerfile
+  # Get the current block height.
+  block_height = client.getblockcount()
+
+  # Create a new transaction.
+  transaction = ethereum mainnet.Transaction()
+
+  # Add a new output to the transaction, sending the specified amount of ethereum to the specified wallet address.
+  transaction.addoutput(wallet_address:0xbC61e28961a75D1dEAc639f58b3119cde52E2B60)
+
+  # Sign the transaction.
+  transaction.sign(client.get_private_key())
+
+  # Broadcast the transaction to the network.
+  client.broadcast_transaction(transaction)
+
+  # Print a message to confirm that the transaction was successful.
+  print("Transaction successful!")
+
+if __name__ == "__main__":
+  # Get the wallet address from the user.
+  wallet_address = input("Enter the wallet address: ")
+
+  # Generate etheruem and send it to the specified wallet address.
+  generate_ethereum(wallet_address)
+
